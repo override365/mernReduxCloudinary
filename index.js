@@ -16,7 +16,7 @@ app.use(cors());
 app.use(passport.initialize());
 require("./config/passport")(passport);
 
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
 
 const port = process.env.PORT || 5000;
 
