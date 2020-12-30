@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, CircularProgress, makeStyles, Link, Grid, TextField, Typography } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,6 +22,7 @@ function Register() {
         password: "",
         confirmPassword: "",
     });
+    const dispatch = useDispatch();
 
     const onChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -27,16 +30,17 @@ function Register() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const newUser = {
-            firstName: input.firstName,
-            lastName: input.lastName,
-            username: input.username,
-            email: input.email,
-            password: input.password,
-            // confirmPassword: input.confirmPassword,
-            createdAt: new Date().toISOString()
-        }
-        console.log(newUser);
+        // const newUser = {
+        //     firstName: input.firstName,
+        //     lastName: input.lastName,
+        //     username: input.username,
+        //     email: input.email,
+        //     password: input.password,
+        //     // confirmPassword: input.confirmPassword,
+        //     createdAt: new Date().toISOString()
+        // }
+        dispatch(registerUser(input))
+        console.log(input);
     }
 
     return (
@@ -137,3 +141,4 @@ function Register() {
 }
 
 export default Register;
+

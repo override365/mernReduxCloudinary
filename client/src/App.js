@@ -1,9 +1,12 @@
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider, CssBaseline, Container } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
 import "./style/main.css";
 import { theme } from "./style/style";
 
+import { registerUser } from "./actions/authActions";
 import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
@@ -11,6 +14,8 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 
 function App() {
+    const dispatch = useDispatch();
+
     return (
         <Router>
             <ThemeProvider theme={theme}>

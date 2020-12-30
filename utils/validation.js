@@ -1,52 +1,70 @@
+const Validator = require("validator");
+const isEmpty = require("is-empty");
+
 module.exports.validateRegisterInput = (input) => {
     const errors = {};
 
-    if (input.firstName.trim() === "") {
+    input.firstName = !isEmpty(input.firstName) ? input.firstName : "";
+    input.lastName = !isEmpty(input.lastName) ? input.lastName : "";
+    input.username = !isEmpty(input.username) ? input.username : "";
+    input.email = !isEmpty(input.email) ? input.email : "";
+    input.password = !isEmpty(input.password) ? input.password : "";
+    input.confirmPassword = !isEmpty(input.confirmPassword) ? input.confirmPassword : "";
+
+
+    if (Validator.isEmpty(input.firstName)) {
         errors.firstName = "Debe ingresar un nombre.";
     }
-    if (input.lastName.trim() === "") {
+    if (Validator.isEmpty(input.lastName)) {
         errors.lastName = "Debe ingresar un apellido.";
     }
-    if (input.username.trim() === "") {
+    if (Validator.isEmpty(input.username)) {
         errors.username = "Debe ingresar un nombre de usuario.";
     }
-    if (input.email.trim() === "") {
+    if (Validator.isEmpty(input.email)) {
         errors.email = "Debe ingresar un correo electronico.";
-    } else {
-        const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/
-        if (!input.email.match(regEx)) {
+    } else if (!Validator.isEmail(input.email)) {
             errors.email = "Debe ingresar un correo electronico valido."
         }
-    }
-    if (input.password.trim() === "") {
+    if (Validator.isEmpty(input.password)) {
         errors.password = "Debe ingresar una Contraseña";
-    } else if (input.password !== input.confirmPassword) {
-        errors.confirmPassword = "Las contraseñas deben coincidir."
+    } 
+    if (Validator.isEmpty(input.confirmPassword)) {
+        errors.confirmPassword = "Debe confirmar su contraseña";
     }
+    if (!Validator.isLength(input.password, { min: 6, max: 30 })) {
+        errors.password = "Su contraseña debe tener al menos 6 caracteres";
+    }
+    if (!Validator.equals(input.password, input.confirmPassword)) {
+        errors.confirmPassword = "Las contraseñas deben coincidir";
+    }
+
+
 
     return {
         errors,
-        valid: Object.keys(errors).length < 1
+        valid: isEmpty(errors)
     }
 }
 
 module.exports.validateLoginInput = (input) => {
-    const errors = {}
+    const errors = {};
 
-    if (input.email.trim() === "") {
+    input.email = !isEmpty(input.email) ? input.email : "";
+    input.password = !isEmpty(input.password) ? input.password : "";
+
+    if (Validator.isEmpty(input.email)) {
         errors.email = "Debe ingresar un correo electronico."
-    } else {
-        const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/
-        if (!input.email.match(regEx)) {
+    } else if (!Validator.isEmail(input.email)) {
             errors.email = "Debe ingresar un correo electronico valido."
         }
-    }
-    if (input.password.trim() === "") {
+    
+    if (Validator.isEmpty(input.password)) {
         errors.password = "Debe ingresar una contraseña"
     }
 
     return {
         errors,
-        valid: Object.keys(errors).length < 1
+        valid: isEmpty(errors)
     }
 }
