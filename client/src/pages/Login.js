@@ -1,6 +1,10 @@
-import React, { useState } from "react";
-import { Button, CircularProgress, makeStyles, Link, Grid, TextField, Typography } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Button, makeStyles, Link, Grid, TextField, Typography } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import { useDispatch, useSelector } from "react-redux";
+
+import { loginUser } from "../actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,6 +20,16 @@ function Login() {
         email: "",
         password: ""
     });
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const loginState = useSelector(state => state.auth.isAuthenticated);
+    const errorsState = useSelector(state => state.errors);
+
+    useEffect(() => {
+        if (loginState !== false) {
+            history.push("/home");
+        }
+    }, [loginState]);
 
     const onChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value })
@@ -23,11 +37,7 @@ function Login() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const loginUser = {
-            email: input.email,
-            password: input.password
-        }
-        console.log(loginUser);
+        dispatch(loginUser(input));
     }
 
     return (
@@ -71,6 +81,15 @@ function Login() {
                                 <Link href="/register"> Reg&iacute;strate</Link>
                             </Typography>
                         </Grid>
+                        {Object.keys(errorsState).length > 0 && (
+                            <div>
+                                <Alert severity="error">
+                                    {Object.values(errorsState).map(err => 
+                                        <AlertTitle key={err}>{err}</AlertTitle>    
+                                    )}
+                                </Alert>
+                            </div>
+                        )}
                     </Grid>
                 </div>
             </form>
@@ -79,4 +98,3 @@ function Login() {
 }
 
 export default Login;
-

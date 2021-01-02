@@ -1,17 +1,15 @@
-import { SET_CURRENT_USER, USER_LOADING, REGISTER_USER } from "../actions/types";
+import { SET_CURRENT_USER, USER_LOADING } from "../actions/types";
 
 const isEmpty = require("is-empty");
 
-// const initialState = {
-//     isAuthenticated: false,
-//     user: {},
-//     loading: false
-// };
+const initialState = {
+    isAuthenticated: false,
+    user: {},
+    loading: false
+};
 
-export default function(state = [], action) {
+export default function(state = initialState, action) {
     switch (action.type) {
-        case REGISTER_USER:
-            return [...state, action.payload];
         case SET_CURRENT_USER:
             return {
                 ...state,

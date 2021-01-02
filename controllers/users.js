@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const { validateRegisterInput, validateLoginInput } = require("../utils/validation");
 const User = require("../models/User");
 const { secretOrKey } =require("../config/keys");
-const { use } = require("../routes/users");
 
 module.exports.registerUser = (req, res) => {
 

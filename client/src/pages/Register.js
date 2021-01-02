@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Button, CircularProgress, makeStyles, Link, Grid, TextField, Typography } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Button, makeStyles, Link, Grid, TextField, Typography } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import { registerUser } from "../actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,6 +25,15 @@ function Register() {
         confirmPassword: "",
     });
     const dispatch = useDispatch();
+    const history = useHistory();
+    const errorsState = useSelector(state => state.errors);
+    const loginState = useSelector(state => state.auth.isAuthenticated);
+
+    useEffect(() => {
+        if (loginState) {
+            history.push("/home");
+        }
+    }, [loginState]);
 
     const onChange = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -30,17 +41,7 @@ function Register() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        // const newUser = {
-        //     firstName: input.firstName,
-        //     lastName: input.lastName,
-        //     username: input.username,
-        //     email: input.email,
-        //     password: input.password,
-        //     // confirmPassword: input.confirmPassword,
-        //     createdAt: new Date().toISOString()
-        // }
-        dispatch(registerUser(input))
-        console.log(input);
+        dispatch(registerUser(input, history));
     }
 
     return (
@@ -133,6 +134,16 @@ function Register() {
                                 <Link href="/login"> Iniciar Sesi&oacute;n</Link>
                             </Typography>
                         </Grid>
+
+                        {Object.keys(errorsState).length > 0 && (
+                            <div>
+                                <Alert severity="error">
+                                {Object.values(errorsState).map(err =>
+                                    <AlertTitle key={err}> {err} </AlertTitle>
+                                )}
+                                </Alert>
+                            </div>
+                        )}
                     </Grid>
                 </div>
             </form>

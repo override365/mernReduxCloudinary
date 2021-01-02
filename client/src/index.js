@@ -7,7 +7,25 @@ import thunk from "redux-thunk";
 import App from './App';
 import reducers from "./reducers";
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+//----------------testing protected routes----------------
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser } from "./actions/authActions";
+
+
+export const store = createStore(reducers, compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+);
+
+//----------------testing protected routes----------------
+if (localStorage.jwt) {
+    const token = localStorage.jwt;
+    setAuthToken(token);
+    const decoded = jwt_decode(token);
+    store.dispatch(setCurrentUser(decoded));
+}
 
 ReactDOM.render(
     <Provider store={store}>
@@ -15,5 +33,3 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root')
 );
-
-// posible troubleshooting
