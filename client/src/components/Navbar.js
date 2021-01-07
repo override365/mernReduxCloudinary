@@ -1,6 +1,7 @@
 import React from "react";
 import { AppBar, Button, makeStyles, IconButton, Toolbar, Typography } from "@material-ui/core";
 import { FilterTiltShiftOutlined } from "@material-ui/icons";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -11,15 +12,35 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1
+    },
+    toolBar: {
+        minHeight: 40
     }
 }));
 
 function NavBar() {
     const classes = useStyles();
+    const loginState = useSelector(state => state.auth);
+
     return (
         <div className={classes.root}>
+            {loginState.isAuthenticated ? 
             <AppBar position="static" >
-                <Toolbar>
+                <Toolbar className={classes.toolBar} >
+                    <IconButton href="/home" edge="start" className={classes.menuButton} color="inherit">
+                        <FilterTiltShiftOutlined />
+                    </IconButton>
+                    <Typography className={classes.title}>
+
+                    </Typography>
+                    <Button color="inherit">
+                        {loginState.user.username}
+                    </Button>
+                </Toolbar>
+            </AppBar>   
+        : (
+            <AppBar position="static" >
+                <Toolbar className={classes.toolBar} >
                     <IconButton href="/" edge="start" className={classes.menuButton} color="inherit">
                         <FilterTiltShiftOutlined />
                     </IconButton>
@@ -33,7 +54,8 @@ function NavBar() {
                         Register
                     </Button>
                 </Toolbar>
-            </AppBar>
+            </AppBar> 
+        )}
         </div>
     );
 }

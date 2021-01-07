@@ -6,7 +6,7 @@ import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
 export const registerUser = (newUser, history) => async (dispatch) => {
     try {
-        const { data } = await api.registerUserApi(newUser);
+        await api.registerUserApi(newUser);
         history.push("/");
     } catch (error) {
         dispatch({ type: GET_ERRORS, payload: error.response.data  });

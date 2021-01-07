@@ -39,8 +39,6 @@ module.exports.validateRegisterInput = (input) => {
         errors.confirmPassword = "Las contraseñas deben coincidir";
     }
 
-
-
     return {
         errors,
         valid: isEmpty(errors)

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Register() {
     const classes = useStyles();
-    const [errors, setErrors] = useState({});
+    // const [errors, setErrors] = useState({});
     const [input, setInput] = useState({
         firstName: "",
         lastName: "",
@@ -59,7 +59,7 @@ function Register() {
                                 name="firstName"
                                 value={input.firstName}
                                 onChange={onChange}
-                                error={errors.firstName ? true : false}
+                                // error={errors.firstName ? true : false}
                             />    
                         </Grid>
                         <Grid item xs={12} sm={7} md={5} lg={4} xl={4} className="grid-item">
@@ -71,7 +71,7 @@ function Register() {
                                 name="lastName"
                                 value={input.lastName}
                                 onChange={onChange}
-                                error={errors.lastName ? true : false}
+                                // error={errors.lastName ? true : false}
                             />    
                         </Grid>
                         <Grid item xs={12} sm={7} md={5} lg={4} xl={4} className="grid-item">
@@ -83,7 +83,7 @@ function Register() {
                                 name="username"
                                 value={input.username}
                                 onChange={onChange}
-                                error={errors.username ? true : false}
+                                // error={errors.username ? true : false}
                             />    
                         </Grid>
                         <Grid item xs={12} sm={7} md={5} lg={4} xl={4} className="grid-item">
@@ -96,7 +96,7 @@ function Register() {
                                 name="email"
                                 value={input.email}
                                 onChange={onChange}
-                                error={errors.email ? true : false}
+                                // error={errors.email ? true : false}
                             />    
                         </Grid>
                         <Grid item xs={12} sm={7} md={5} lg={4} xl={4} className="grid-item">
@@ -109,7 +109,7 @@ function Register() {
                                 name="password"
                                 value={input.password}
                                 onChange={onChange}
-                                error={errors.password ? true : false}
+                                // error={errors.password ? true : false}
                             />    
                         </Grid>
                         <Grid item xs={12} sm={7} md={5} lg={4} xl={4} className="grid-item">
@@ -122,7 +122,7 @@ function Register() {
                                 name="confirmPassword"
                                 value={input.confirmPassword}
                                 onChange={onChange}
-                                error={errors.confirmPassword ? true : false}
+                                // error={errors.confirmPassword ? true : false}
                             />    
                         </Grid>
                         <Grid item xs={8} sm={5} md={4} lg={3} className="grid-item" style={{ paddingTop: 20 }}>
