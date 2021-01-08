@@ -4,9 +4,11 @@ import {
 } from "@material-ui/core";
 import { QuestionAnswerOutlined } from "@material-ui/icons";
 import { red, blue } from "@material-ui/core/colors";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
+import { getPostDetail } from "../../actions/postActions";
 import LikeButton from "./LikeButton";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,9 +32,17 @@ const useStyles = makeStyles((theme) => ({
 
 function PostCard({ post: { body, createdAt, _id, username, comments, likes }}) {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
     const { user } = useSelector(state => state.auth);
     const likeCount = likes.length;
     const commentCount = comments.length;
+    const goToPostDetail = (e) => {
+        dispatch(getPostDetail(_id));
+        history.push(`/post/${_id}`);
+        // const urlPost = window.location.href
+        // const idPostDetail = window.location.href.split("/").reverse()[0];
+    };
     return (
         <div className={classes.root}>
             <Card className={classes.root}>
@@ -55,7 +65,7 @@ function PostCard({ post: { body, createdAt, _id, username, comments, likes }}) 
                     <Typography>
                         {likeCount}
                     </Typography>
-                    <IconButton>
+                    <IconButton onClick={goToPostDetail}>
                         <QuestionAnswerOutlined className={classes.commentIcon} />
                     </IconButton>
                     <Typography>

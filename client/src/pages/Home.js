@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Button, makeStyles, Grid, Typography } from "@material-ui/core";
 import { ExitToAppRounded } from "@material-ui/icons";
 
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Home() {
     const classes = useStyles();
+    const history = useHistory();
     const { user } = useSelector(state => state.auth);
     const posts = useSelector(state => state.posts);
     const dispatch = useDispatch();
@@ -24,7 +26,7 @@ function Home() {
     useEffect(() => {
         dispatch(getPosts());
     }, [dispatch]);
-
+    
     const logoutClick = (e) => {
         dispatch(userLogout());
     }

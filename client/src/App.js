@@ -6,17 +6,18 @@ import { useSelector } from "react-redux";
 import "./style/main.css";
 import { theme } from "./style/style";
 
-
 import { PrivateRoute } from "./components/private/PrivateRoute";
 import Navbar from "./components/Navbar";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
+import PostDetail from "./components/Post/PostDetail";
+
 
 function App() {
     const user = useSelector(state => state.auth);
-    
+
     return (
         <Router>
             <ThemeProvider theme={theme}>
@@ -29,6 +30,7 @@ function App() {
                     <Switch>
                         <PrivateRoute exact path="/home" auth={user} component={Home} />
                     </Switch>
+                    <Route exact path="/post/:id" component={PostDetail}/>
                 </Container>
             </ThemeProvider>
         </Router>

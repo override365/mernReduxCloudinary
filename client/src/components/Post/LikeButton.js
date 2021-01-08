@@ -4,7 +4,7 @@ import {  IconButton, makeStyles } from "@material-ui/core";
 import { FavoriteBorderOutlined, FavoriteOutlined } from "@material-ui/icons";
 import { red } from "@material-ui/core/colors";
 
-import { likePost, getPosts } from "../../actions/postActions";
+import { likePost } from "../../actions/postActions";
 
 const useStyles = makeStyles((theme) => ({
     likeIcon: {

@@ -1,10 +1,19 @@
 import * as api from "../api";
-import { ADD_POST, GET_POSTS, LIKE_POST } from "./types";
+import { ADD_POST, GET_POST_DETAIL, GET_POSTS, LIKE_POST } from "./types";
 
 export const getPosts = () => async (dispatch) => {
     try {
         const { data } = await api.getPostsApi();
         dispatch({ type: GET_POSTS, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getPostDetail = (id) => async (dispatch) => {
+    try {
+        const { data } = await api.getPostDetailApi(id);
+        dispatch({ type: GET_POST_DETAIL, payload: data });
     } catch (error) {
         console.log(error);
     }
