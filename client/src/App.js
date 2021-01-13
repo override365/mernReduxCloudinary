@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ThemeProvider, CssBaseline, Container } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import "./style/main.css";
-import { theme } from "./style/style";
+import { lightTheme, darkTheme, themeType } from "./style/style";
 
 import { PrivateRoute } from "./components/private/PrivateRoute";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -16,11 +16,13 @@ import PostDetail from "./components/Post/PostDetail";
 
 
 function App() {
+    const dispatch = useDispatch();
     const user = useSelector(state => state.auth);
-
+    const theme = useSelector(state => state.darkMode);
+    
     return (
         <Router>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={theme === "disabled" ? lightTheme : darkTheme}>
                 <CssBaseline />
                 <Navbar />
                 <Container maxWidth="lg">
@@ -38,4 +40,3 @@ function App() {
 }
 
 export default App;
-

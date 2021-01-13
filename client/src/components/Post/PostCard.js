@@ -60,7 +60,7 @@ function PostCard({ post: { body, createdAt, _id, username, comments, likes }}) 
                         {body}
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing>
+                <CardActions disableSpacing style={{ padding: 1 }}>
                     <LikeButton user={user} post={{ _id, likes }} />
                     <Typography>
                         {likeCount}

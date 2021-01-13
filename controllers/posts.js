@@ -70,8 +70,8 @@ module.exports.commentPost = async (req, res) => {
     const user = checkAuth(authHeader);
     //-----Need to check auth error handler
     const { id } = req.params;
-    const post = await Post.findById(id);
     try {
+        const post = await Post.findById(id);
         post.comments.unshift({
             body: req.body.body,
             username: user.username,
@@ -81,7 +81,6 @@ module.exports.commentPost = async (req, res) => {
         res.status(200).json(post);
         return post;
     } catch (error) {
-        res.status(404).json(error);
+        res.status(404).json({ message: "Post not found", error});
     }
-    
 }

@@ -1,5 +1,5 @@
 import * as api from "../api";
-import { ADD_POST, GET_POST_DETAIL, GET_POSTS, LIKE_POST } from "./types";
+import { ADD_POST, GET_POST_DETAIL, GET_POSTS, LIKE_POST, COMMENT_POST } from "./types";
 
 export const getPosts = () => async (dispatch) => {
     try {
@@ -32,6 +32,15 @@ export const likePost = (id) => async (dispatch) => {
     try {
         const { data } = await api.likePostApi(id);
         dispatch({ type: LIKE_POST, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const commentPost = (id, comment) => async (dispatch) => {
+    try {
+        const { data } = await api.commentPostApi(id, comment);
+        dispatch({ type: COMMENT_POST, payload: data });
     } catch (error) {
         console.log(error);
     }
