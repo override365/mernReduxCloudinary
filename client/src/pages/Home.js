@@ -40,9 +40,6 @@ function Home() {
                 <Grid item xs={12} sm={6} md={6} lg={6} xl={6} className="grid-item">
                     <Grid container direction="column" justify="center" alignItems="center" spacing={1}>
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="grid-item">
-                            <Typography variant="h5" >
-                                Recent posts
-                            </Typography>
                             <PostForm />
                         </Grid>
                         {posts.map((post) => (

@@ -28,30 +28,28 @@ function PostForm() {
     }
     return (
         <div>
-            <Card>
-                <Typography>
-                    &nbsp;
-                </Typography>
-                <form noValidate onSubmit={onSubmit}>
-                    <TextField 
-                        fullWidth
-                        variant="outlined"
-                        placeholder="What's on your mind?"
-                        name="body"
-                        onChange={onChange}
-                        value={postData.body}
-                        style={{ paddingBottom: 10 }}
-                    />
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        disabled={!btnEnabled}
-                    >
-                        Post
-                    </Button>
-                </form>
-            </Card>
+            <form noValidate onSubmit={onSubmit}>
+                <TextField 
+                    fullWidth
+                    variant="outlined"
+                    placeholder="What's on your mind?"
+                    name="body"
+                    onChange={onChange}
+                    value={postData.body}
+                    style={{ paddingBottom: 5 }}
+                    multiline
+                    rowsMax={7}
+                />
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={!btnEnabled}
+                    style={{ float: "right", borderRadius: 50, textTransform: "none" }}
+                >
+                    Post
+                </Button>
+            </form>
         </div>
     );
 }

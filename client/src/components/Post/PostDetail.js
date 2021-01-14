@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { 
-    Grid, Avatar, Card, CardHeader, CardContent, CardActions, IconButton, makeStyles, Typography, TextField, Button
+    Grid, Avatar, Card, CardHeader, CardContent, CardActions, IconButton, Paper, Typography, TextField, Button
 } from "@material-ui/core";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 
+import { stringToColor } from "../../utils/RandomColor";
 import { getPosts, commentPost } from "../../actions/postActions";
 import LikeButton from "./LikeButton";
 
@@ -16,6 +17,12 @@ function PostDetail({ match }) {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
     const post = useSelector(state => state.posts.find(post => post._id === id));
+
+    const clearComment = () => {
+        setCommentData({
+            body: ""
+        })
+    }
     
     
     useEffect(() => {
@@ -41,7 +48,7 @@ function PostDetail({ match }) {
 
     const submitComment = (e) => {
         e.preventDefault();
-        // console.log(_id, commentData);
+        clearComment();
         dispatch(commentPost(_id, commentData));
     }
 
@@ -52,7 +59,7 @@ function PostDetail({ match }) {
                 <Card style={{ marginBottom: 15, marginTop: 15 }}>
                     <CardHeader 
                         avatar={
-                            <Avatar>
+                            <Avatar style={{ backgroundColor: stringToColor(post.username) }} >
                                 {post.username.charAt(0).toUpperCase()}
                             </Avatar>
                         }
@@ -65,25 +72,25 @@ function PostDetail({ match }) {
                     </CardContent>
                     <CardActions style={{ paddingLeft: 15 }}>
                         <Typography>
-                            {moment(post.createdAt).format("h:mm a - MMMM Do YYYY")}
+                            {moment(post.createdAt).locale("es").format("h:mm a - D MMMM YYYY")}
                         </Typography>
                     </CardActions>
                     <CardActions style={{ paddingLeft: 15 }}>
                         <Typography variant="subtitle2">
-                            {post.likes.length} likes
+                            {post.likes.length} likes  
                         </Typography>
                         <Typography variant="subtitle2">
-                            {post.comments.length} comments
+                            {post.comments.length} comentarios
                         </Typography>
                     </CardActions>
                     <CardActions style={{ padding: 1 }} >
                         <LikeButton user={user} post={{ _id, likes }} />
                         <Typography>
-                            action buttons here
+                            
                         </Typography>
                     </CardActions>
                 </Card>
-                <Card>
+                <div style={{ height: 100 }}>
                     <form noValidate>
                         <TextField 
                             fullWidth
@@ -92,6 +99,7 @@ function PostDetail({ match }) {
                             name="body"
                             value={commentData.body}
                             onChange={onChange}
+                            style={{ paddingBottom: 5 }}
                         />
                         <Button
                             type="submit"
@@ -99,20 +107,22 @@ function PostDetail({ match }) {
                             color="primary"
                             disabled={!btnEnabled}
                             onClick={submitComment}
+                            style={{ borderRadius: 50, float: "right", textTransform: "none" }}
                         >
-                           Reply 
+                           Commentar
                         </Button>
                     </form>
-                </Card>
+                    </div>
                 {post.comments.map(comment => (
                     <Card key={comment._id} style={{ marginTop: 5 }}>
                         <CardHeader 
                             avatar={
-                                <Avatar>
+                                <Avatar style={{ backgroundColor: stringToColor(comment.username) }} >
                                     {comment.username.charAt(0).toUpperCase()}
                                 </Avatar>
                             }
                             title={comment.username}
+                            subheader={moment(comment.createdAt).locale("es").fromNow()}
                         />
                         <CardContent>
                             <Typography>

@@ -1,13 +1,14 @@
 import React from "react";
 import { 
-    Avatar, Card, CardHeader, CardContent, CardActions, IconButton, makeStyles, Typography 
+    Avatar, Card, ButtonBase, CardHeader, CardContent, CardActions, IconButton, makeStyles, Typography 
 } from "@material-ui/core";
 import { QuestionAnswerOutlined } from "@material-ui/icons";
 import { red, blue } from "@material-ui/core/colors";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 
+import { stringToColor } from "../../utils/RandomColor";
 import { getPostDetail } from "../../actions/postActions";
 import LikeButton from "./LikeButton";
 
@@ -40,26 +41,27 @@ function PostCard({ post: { body, createdAt, _id, username, comments, likes }}) 
     const goToPostDetail = (e) => {
         dispatch(getPostDetail(_id));
         history.push(`/post/${_id}`);
-        // const urlPost = window.location.href
-        // const idPostDetail = window.location.href.split("/").reverse()[0];
     };
     return (
         <div className={classes.root}>
             <Card className={classes.root}>
-                <CardHeader 
-                    avatar={
-                        <Avatar className={classes.avatar} >
-                            {username.charAt(0).toUpperCase()}
-                        </Avatar>
-                    }
-                    title={username}
-                    subheader={moment(createdAt).fromNow()}
-                />
-                <CardContent>
-                    <Typography>
-                        {body}
-                    </Typography>
-                </CardContent>
+                    <CardHeader 
+                        avatar={
+                            <Avatar 
+                                // className={classes.avatar} 
+                                style={{ backgroundColor: stringToColor(username) }}
+                            >
+                                {username.charAt(0).toUpperCase()}
+                            </Avatar>
+                        }
+                        title={username}
+                        subheader={moment(createdAt).locale("es").fromNow()}
+                    />
+                    <CardContent>
+                        <Typography>
+                            {body}
+                        </Typography>
+                    </CardContent>
                 <CardActions disableSpacing style={{ padding: 1 }}>
                     <LikeButton user={user} post={{ _id, likes }} />
                     <Typography>
