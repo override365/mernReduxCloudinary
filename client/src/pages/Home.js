@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { Button, makeStyles, Grid, Typography } from "@material-ui/core";
-import { ExitToAppRounded } from "@material-ui/icons";
+import { makeStyles, Grid } from "@material-ui/core";
 
-import { userLogout } from "../actions/authActions";
 import { getPosts } from "../actions/postActions";
 import PostForm from "../components/Post/PostForm";
 import PostCard from "../components/Post/PostCard";
@@ -18,18 +15,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Home() {
     const classes = useStyles();
-    const history = useHistory();
-    // const { user } = useSelector(state => state.auth);
     const posts = useSelector(state => state.posts);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getPosts());
     }, [dispatch]);
-    
-    const logoutClick = (e) => {
-        dispatch(userLogout());
-    }
     
     return (
         <div className={classes.root}>

@@ -1,7 +1,5 @@
 import { createMuiTheme } from "@material-ui/core"
 
-const currentTheme = localStorage.getItem("darkMode");
-
 const light = {
     typography: {
         fontFamily: "Google Sans, Arial"
@@ -26,7 +24,6 @@ export const darkTheme = createMuiTheme(dark);
 export const themeType = (theme) => {
     if (theme === true) {
         return darkTheme;
-        
     } else {
         return lightTheme;
     }

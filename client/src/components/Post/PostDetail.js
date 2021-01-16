@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { 
-    Grid, Avatar, Card, CardHeader, CardContent, CardActions, IconButton, Paper, Typography, TextField, Button
+    Grid, Avatar, Card, CardHeader, CardContent, CardActions, Typography, TextField, Button
 } from "@material-ui/core";
 import moment from "moment/min/moment-with-locales";
 
@@ -23,7 +23,6 @@ function PostDetail({ match }) {
             body: ""
         })
     }
-    
     
     useEffect(() => {
         if (!post) {
@@ -71,16 +70,16 @@ function PostDetail({ match }) {
                         </Typography>
                     </CardContent>
                     <CardActions style={{ paddingLeft: 15 }}>
-                        <Typography>
+                        <Typography variant="body2" >
                             {moment(post.createdAt).locale("es").format("h:mm a - D MMMM YYYY")}
                         </Typography>
                     </CardActions>
                     <CardActions style={{ paddingLeft: 15 }}>
-                        <Typography variant="subtitle2">
-                            {post.likes.length} likes  
+                        <Typography variant="caption">
+                            {post.likes.length} likes
                         </Typography>
-                        <Typography variant="subtitle2">
-                            {post.comments.length} comentarios
+                        <Typography variant="caption">
+                            {post.comments.length} comments
                         </Typography>
                     </CardActions>
                     <CardActions style={{ padding: 1 }} >
