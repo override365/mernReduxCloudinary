@@ -1,30 +1,80 @@
 import React, { useState } from "react" ;
-import { Button, TextField } from "@material-ui/core";
+import axios from "axios";
+import { Button, TextField, IconButton } from "@material-ui/core";
+import { ImageSearch, Cancel } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 
 import { addPost } from "../../actions/postActions";
 
 function PostForm() {
+    const dispatch = useDispatch();
     const [postData, setPostData] = useState({ 
         body: ""
     });
-    const dispatch = useDispatch();
+    const [imgUrl, setImageUrl] = useState({});
+    const [fileInput, setFileInput] = useState("");
+    const [selectedFile, setSelectedFile] = useState("");
+    const [previewSource, setPreviewSource] = useState();
+    
     const btnEnabled = postData.body.length > 0;
-
-    const clear = () => {
-        setPostData({
-            body: ""
-        });
-    }
 
     const onChange = (e) => {
         setPostData({ ...postData, [e.target.name]: e.target.value });
     }
 
-    const onSubmit = (e) => {
+    const displayPreview = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setPreviewSource(reader.result);
+        }
+    }
+
+    const discardImage = () => {
+        setPreviewSource("");
+    }
+
+    const handleFileInput = (e) => {
+        const file = e.target.files[0];
+        displayPreview(file);
+    }
+
+    const uploadImageToCloudinary = async (base64EncodedImage) => {
+        const imageBase = JSON.stringify({ data: base64EncodedImage });
+        try {
+            const { data:response } = await axios.post("/upload/image", imageBase, {
+                headers: { "Content-Type": "application/json" }
+            });
+            setImageUrl(response);
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const clear = () => {
+        setPostData({body: ""});
+        setPreviewSource("");
+    }
+
+    const onSubmit = async (e) => {
         e.preventDefault();
-        dispatch(addPost(postData));
-        clear();
+        if (!previewSource) {
+            let newObject = {
+                body: postData.body,
+                url: ""
+            }
+            dispatch(addPost(newObject));
+            clear();
+        } else {
+            const imagen = await uploadImageToCloudinary(previewSource);
+            let newObjectWithImg = {
+                body: postData.body,
+                url: imagen.url
+            }
+            dispatch(addPost(newObjectWithImg));
+            clear();
+        }
     }
     return (
         <div>
@@ -40,16 +90,28 @@ function PostForm() {
                     multiline
                     rowsMax={7}
                 />
+                <IconButton component="label" >
+                    <ImageSearch />
+                    <input type="file" accept="image/*"  name="image" onChange={handleFileInput} value={fileInput} hidden />
+                </IconButton>
                 <Button
                     type="submit"
                     variant="contained"
                     color="primary"
                     disabled={!btnEnabled}
-                    style={{ float: "right", borderRadius: 50, textTransform: "none" }}
+                    style={{ float: "right", borderRadius: 50, textTransform: "none", marginTop: 5 }}
                 >
                     Post
                 </Button>
             </form>
+            {previewSource && (
+                <>
+                    <img src={previewSource} alt="" style={{ height: 200 }} />
+                    <IconButton style={{ float: "left" }} onClick={discardImage}>
+                        <Cancel />
+                    </IconButton>
+                </>
+            )}
         </div>
     );
 }

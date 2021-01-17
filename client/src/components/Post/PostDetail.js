@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { 
-    Grid, Avatar, Card, CardHeader, CardContent, CardActions, Typography, TextField, Button
+     CardMedia, Grid, Avatar, Card, CardHeader, CardContent, CardActions, Typography, TextField, Button
 } from "@material-ui/core";
 import moment from "moment/min/moment-with-locales";
 
@@ -68,10 +68,12 @@ function PostDetail({ match }) {
                         <Typography variant="h5">
                             {post.body}
                         </Typography>
-                        {post.imageUrl && (
-                            <img src={post.imageUrl} style={{ height: 300 }} alt=""/>
-                        )}
                     </CardContent>
+                    {post.imageUrl && (
+                            <>
+                             <img src={post.imageUrl} style={{ height: "100%", width: "100%", objectFit: "contain" }} alt=""/>
+                            </>
+                    )}
                     <CardActions style={{ paddingLeft: 15 }}>
                         <Typography variant="body2" >
                             {moment(post.createdAt).locale("es").format("h:mm a - D MMMM YYYY")}
