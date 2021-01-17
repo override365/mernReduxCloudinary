@@ -6,9 +6,7 @@ module.exports.uploadImage = async (req, res) => {
     try {
         const fileStr = req.body.data;
         const uploadedResponse = await cloudinary.uploader.upload(fileStr, {upload_preset: "postimages"});
-        console.log(uploadedResponse);
-        res.status(200).json({ message: "image uploaded"})
-        
+        res.status(200).json({ "url": uploadedResponse.url });
     } catch (error) {
         console.log(error);
         res.status(400).json({ message: "error while uploading", error })

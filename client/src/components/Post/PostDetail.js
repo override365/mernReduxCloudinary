@@ -68,6 +68,9 @@ function PostDetail({ match }) {
                         <Typography variant="h5">
                             {post.body}
                         </Typography>
+                        {post.imageUrl && (
+                            <img src={post.imageUrl} style={{ height: 300 }} alt=""/>
+                        )}
                     </CardContent>
                     <CardActions style={{ paddingLeft: 15 }}>
                         <Typography variant="body2" >

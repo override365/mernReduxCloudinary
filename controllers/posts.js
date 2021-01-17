@@ -25,6 +25,7 @@ module.exports.addPost = async (req, res) => {
     const user = checkAuth(authHeader);
     const newPost = new Post({
         body: req.body.body,
+        imageUrl: req.body.url,
         user: user.id,
         username: user.username,
         createdAt: new Date().toISOString()

@@ -7,6 +7,7 @@ const passport = require("passport");
 const { mongoURI } = require("./config/keys");
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
+const uploadRoutes = require("./routes/uploads");
 const testRoutes = require("./routes/tests");
 
 const app = express();
@@ -20,6 +21,7 @@ require("./config/passport")(passport);
 
 app.use("/user", userRoutes);
 app.use("/post", postRoutes);
+app.use("/upload", uploadRoutes);
 app.use("/test", testRoutes);
 
 const port = process.env.PORT || 5000;

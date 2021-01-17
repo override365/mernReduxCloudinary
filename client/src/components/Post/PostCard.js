@@ -1,6 +1,6 @@
 import React from "react";
 import { 
-    Avatar, Card, CardHeader, CardContent, CardActions, IconButton, makeStyles, Typography 
+    Avatar, Card, CardHeader, CardContent, CardActions, CardMedia, IconButton, makeStyles, Typography 
 } from "@material-ui/core";
 import { QuestionAnswerOutlined } from "@material-ui/icons";
 import { red, blue } from "@material-ui/core/colors";
@@ -28,10 +28,14 @@ const useStyles = makeStyles((theme) => ({
     },
     commentIcon: {
         color: blue[500]
+    },
+    media: {
+        height: 0,
+        paddingTop: "56.25%"
     }
 }));
 
-function PostCard({ post: { body, createdAt, _id, username, comments, likes }}) {
+function PostCard({ post: { body, imageUrl, createdAt, _id, username, comments, likes }}) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -62,6 +66,12 @@ function PostCard({ post: { body, createdAt, _id, username, comments, likes }}) 
                             {body}
                         </Typography>
                     </CardContent>
+                    {imageUrl && (
+                        <CardMedia 
+                            className={classes.media}
+                            image={imageUrl}
+                        />
+                    )}
                 <CardActions disableSpacing style={{ padding: 1 }}>
                     <LikeButton user={user} post={{ _id, likes }} />
                     <Typography>
