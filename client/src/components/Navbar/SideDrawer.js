@@ -1,26 +1,29 @@
-import React, { useState } from "react";
-import { Drawer, IconButton, makeStyles, List, ListItem, ListItemText } from "@material-ui/core";
+import {
+    Drawer, IconButton, List, ListItem, ListItemText
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { Menu } from "@material-ui/icons";
+import * as React from "react";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
     list: {
         width: 250
     }
-}));
+}))
 
-
-function SideDrawer() {
+const SideDrawer = () => {
     const classes = useStyles();
     const [drawerState, setDrawerState] = useState({ left: false });
 
-    const toggleDrawer = (anchor, open) => (e) => {
+    const toggleDrawer = (anchor, open) => e => {
         if (e.type === "keydown" && (e.key === "Tab" || e.key === "Shift")) {
             return;
         }
-        setDrawerState({[anchor]: open});
-    }
+        setDrawerState({ [anchor]: open });
+    };
 
-    const drawerList = (anchor) => {
+    const sideDrawerList = (anchor) => (
         <div
             className={classes.list}
             role="presentation"
@@ -35,27 +38,26 @@ function SideDrawer() {
                 ))}
             </List>
         </div>
-    };
-
+    );
 
     return (
         <>
-        <IconButton
-            edge="start"
-            aria-label="menu"
-            onClick={toggleDrawer("left", true)}
-        >
-            <Menu />
-        </IconButton>
-        <Drawer
-            anchor="left"
-            open={drawerState.left}
-            onClose={toggleDrawer("left", false)}
-        >
-            {drawerList("left")}
-        </Drawer>
+            <IconButton
+                edge="start"
+                aria-label="menu"
+                onClick={toggleDrawer("left", true)}
+            >
+                <Menu />
+            </IconButton>
+            <Drawer
+                anchor="left"
+                open={drawerState.left}
+                onClose={toggleDrawer("left", false)}
+            >
+                {sideDrawerList("left")}
+            </Drawer>
         </>
     );
-}
+};
 
 export default SideDrawer;

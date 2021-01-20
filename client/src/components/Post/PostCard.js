@@ -48,7 +48,7 @@ function PostCard({ post: { body, imageUrl, createdAt, _id, username, comments, 
     };
     return (
         <div className={classes.root}>
-            <Card className={classes.root}>
+            <Card className={classes.root} variant="outlined">
                     <CardHeader 
                         avatar={
                             <Avatar 

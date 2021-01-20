@@ -15,7 +15,7 @@ import Home from "./pages/Home";
 import PostDetail from "./components/Post/PostDetail";
 
 //---test---
-import UploadImage from "./components/Test/UploadImage";
+import SideDrawer from "./components/Navbar/SideDrawer";
 
 function App() {
     const user = useSelector(state => state.auth);
@@ -34,7 +34,7 @@ function App() {
                         <PrivateRoute exact path="/home" auth={user} component={Home} />
                     </Switch>
                     <Route exact path="/post/:id" component={PostDetail}/>
-                    <Route exact path="/test" component={UploadImage} />
+                    <Route exact path="/test" component={SideDrawer} />
                 </Container>
             </ThemeProvider>
         </Router>

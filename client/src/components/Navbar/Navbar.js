@@ -7,6 +7,7 @@ import {
     List, ListItem, ListItemIcon, ListItemText
 } from "@material-ui/core";
 
+import SideDrawer from "./SideDrawer";
 import DarkModeToggle from "./DarkModeToggle";
 import { userLogout } from "../../actions/authActions";
 
@@ -44,37 +45,8 @@ function NavBar() {
     const dispatch = useDispatch();
     const loginState = useSelector(state => state.auth);
     const [dropMenu, setDropMenu] = useState(null);
-    const [drawer, setDrawer] = useState(false);
     const openDropMenu = Boolean(dropMenu);
-    const anchorDrawer = "left";
-
-    const toggleDrawer = (anchor, open) => (e) => {
-        if (e.type === "keydown" && (e.key === "Tab" || e.key === "Shift")) {
-            return;
-        }
-        setDrawer({ ...drawer, [anchor]:open });
-    }
     
-    const list = (anchor) => (
-        <div
-            className={classes.list}
-            role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <List>
-                {["Inbox", "Starred", "Send Email", "Drafts"].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>
-                            {index % 2 === 0 ? <FilterTiltShiftOutlined /> : <AccountCircle />}
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
-        </div>
-    );
-
     const handleMenu = (e) => {
         setDropMenu(e.currentTarget);
     }
@@ -94,9 +66,7 @@ function NavBar() {
             <>
             <AppBar position="static" >
                 <Toolbar className={classes.toolBar} >
-                    <IconButton color="inherit" onClick={toggleDrawer(anchorDrawer, true)}>
-                        <MenuIcon />
-                    </IconButton>
+                    <SideDrawer />
                     <Button color="inherit" className={classes.homeButton} href="/home">
                         <Typography>
                             Home
@@ -136,14 +106,6 @@ function NavBar() {
                     </Menu>
                 </Toolbar>
             </AppBar>
-            
-            <Drawer
-                anchor="left"
-                open={drawer[anchorDrawer]}
-                onClose={toggleDrawer(anchorDrawer, false)}
-            >
-                {list(anchorDrawer)}
-            </Drawer>   
         </>
         : (
             <AppBar position="static" >
