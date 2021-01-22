@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 import "./style/main.css";
 import { lightTheme, darkTheme } from "./style/style";
 
-import { PrivateRoute } from "./components/private/PrivateRoute";
+import { PrivateRoute } from "./components/Private/PrivateRoute";
+import Profile from "./components/User/Profile";
 import Navbar from "./components/Navbar/Navbar";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
@@ -15,7 +16,7 @@ import Home from "./pages/Home";
 import PostDetail from "./components/Post/PostDetail";
 
 //---test---
-import SideDrawer from "./components/Navbar/SideDrawer";
+import JustATest from "./components/Test/Test";
 
 function App() {
     const user = useSelector(state => state.auth);
@@ -32,9 +33,10 @@ function App() {
                     <Route exact path="/register" component={Register} />
                     <Switch>
                         <PrivateRoute exact path="/home" auth={user} component={Home} />
-                    </Switch>
+                    </Switch>    
                     <Route exact path="/post/:id" component={PostDetail}/>
-                    <Route exact path="/test" component={SideDrawer} />
+                    <Route exact path="/profile/:username" component={Profile} />
+                    <Route exact path="/test" component={JustATest} />
                 </Container>
             </ThemeProvider>
         </Router>

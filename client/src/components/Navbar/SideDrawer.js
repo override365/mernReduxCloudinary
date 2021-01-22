@@ -1,27 +1,41 @@
+import React, { useState } from "react";
 import {
-    Drawer, IconButton, List, ListItem, ListItemText
+    Drawer, IconButton, makeStyles, List, ListItem, ListItemText
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Menu } from "@material-ui/icons";
-import * as React from "react";
-import { useState } from "react";
+import { Menu, AccountCircle, Message, Settings } from "@material-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { getUserProfile } from "../../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
     list: {
         width: 250
+    },
+    icon: {
+        marginRight: 15
     }
 }))
 
 const SideDrawer = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { user } = useSelector(state => state.auth);
     const [drawerState, setDrawerState] = useState({ left: false });
 
-    const toggleDrawer = (anchor, open) => e => {
+    const toggleDrawer = (anchor, open) => (e) => {
         if (e.type === "keydown" && (e.key === "Tab" || e.key === "Shift")) {
             return;
         }
-        setDrawerState({ [anchor]: open });
+        setDrawerState({[anchor]: open});
     };
+
+    const goToProfile = () => {
+        dispatch(getUserProfile(user.username));
+        history.push(`/profile/${user.username}`);
+
+    }
 
     const sideDrawerList = (anchor) => (
         <div
@@ -31,12 +45,20 @@ const SideDrawer = () => {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List component="nav">
-                {["Profile", "Messages", "Settings"].map((text) => (
-                    <ListItem button key={text}>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItem button onClick={goToProfile} >
+                    <AccountCircle className={classes.icon}/>
+                    <ListItemText primary="Profile"/>
+                </ListItem>
+                <ListItem button>
+                    <Message className={classes.icon}/>
+                    <ListItemText primary="Messages"/>
+                </ListItem>
+                <ListItem button>
+                    <Settings className={classes.icon}/>
+                    <ListItemText primary="Settings"/>
+                </ListItem>
             </List>
+            
         </div>
     );
 
@@ -47,7 +69,7 @@ const SideDrawer = () => {
                 aria-label="menu"
                 onClick={toggleDrawer("left", true)}
             >
-                <Menu />
+                <Menu style={{ color: "white"}}/>
             </IconButton>
             <Drawer
                 anchor="left"

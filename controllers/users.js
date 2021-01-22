@@ -5,6 +5,25 @@ const { validateRegisterInput, validateLoginInput } = require("../utils/validati
 const User = require("../models/User");
 const { secretOrKey } =require("../config/keys");
 
+module.exports.getUsers = async (req, res) => {
+    try {
+        const users = await User.find().sort({ createdAt: -1 })
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(404).json({ message: "No users were found", error });
+    }
+}
+
+module.exports.getUser = async (req, res) => {
+    const { username } = req.params;
+    try {
+        const user = await User.findOne({username});
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(404).json({ message: "User not found", error });
+    }
+}
+
 module.exports.registerUser = (req, res) => {
 
     const { errors, valid } = validateRegisterInput(req.body);

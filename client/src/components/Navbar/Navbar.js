@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { FilterTiltShiftOutlined, AccountCircle } from "@material-ui/icons";
-import MenuIcon from "@material-ui/icons/Menu";
 import { useSelector, useDispatch } from "react-redux";
 import { 
-    AppBar, Button, makeStyles, IconButton, Menu, MenuItem, Toolbar, Typography, Drawer,
-    List, ListItem, ListItemIcon, ListItemText
+    AppBar, Button, makeStyles, IconButton, Menu, MenuItem, Toolbar, Typography
 } from "@material-ui/core";
 
 import SideDrawer from "./SideDrawer";
@@ -30,13 +28,6 @@ const useStyles = makeStyles((theme) => ({
     menuPaper: {
         backgroundColor: "#3f51b5",
         color: "white"
-    },
-    list: {
-        width: 250,
-    },
-    fullList: {
-        width: "auto",
-        
     }
 }));
 
